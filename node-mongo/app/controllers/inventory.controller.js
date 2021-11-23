@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-mongoose.set("useFindAndModify", false);
+// mongoose.set("useFindAndModify", false);
 const Inventory = mongoose.model("Inventory");
 
 exports.createInventory = (req, res) => {
@@ -35,7 +35,7 @@ exports.getInventory = (req, res) => {
           error: err,
         });
       }
-      return res.status(500).json({
+      return res.status(500).send({
         message: "Error retrieving Inventory with id " + req.params.id,
         error: err.message,
       });
@@ -49,7 +49,7 @@ exports.inventories = (req, res) => {
       res.status(200).json(inventoryInfos);
     })
     .catch((error) => {
-      console.log(errr);
+      console.log(err);
       res.status(500).json({
         message: "Error",
         error: error,
@@ -59,7 +59,7 @@ exports.inventories = (req, res) => {
 
 exports.deleteInventory = (req, res) => {
   Inventory.findByIdAndRemove(req.params.id)
-    .select("-__v")
+    .select("-__v-id")
     .then((inventory) => {
       if (!inventory) {
         res.status(404).json({
@@ -79,7 +79,7 @@ exports.deleteInventory = (req, res) => {
 
 exports.updateInventory = (req, res) => {
   Inventory.findByIdAndUpdate(
-    req.params.id,
+    req.body._id,
     {
       prodname: req.body.prodname,
       qty: req.body.qty,
@@ -91,7 +91,7 @@ exports.updateInventory = (req, res) => {
     .select("-__v")
     .then((inventory) => {
       if (!inventory) {
-        res.status(404).json({
+        res.status(404).send({
           message:
             "Error => can't update an inventory with id = " + req.params.id,
           error: "Not Found!",

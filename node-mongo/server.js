@@ -18,10 +18,10 @@ mongoose.connection
     console.log("Mongoose connection open");
   })
   .on("error", (err) => {
-    console.log(`Conntection error: ${err.message}`);
+    console.log(`Connection error: ${err.message}`);
   });
 
-require("./app/routes/inventory.router.js");
+require("./app/routes/inventory.router.js")(app);
 
 const server = app.listen(8080, function () {
   const host = server.address().address;
