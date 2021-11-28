@@ -38,9 +38,9 @@ class InventoryList extends Component {
   render() {
     const { inventories, isLoading } = this.state;
 
-    // if (isLoading) {
-    //   return <p>Loading...</p>;
-    // }
+    if (isLoading) {
+      return <p>Loading...</p>;
+    }
     const inventoryList = inventories.map((inventory) => {
       return (
         <tr key={inventory._id}>
