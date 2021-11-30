@@ -21,7 +21,9 @@ class InventoryEdit extends Component {
   async componentDidMount() {
     if (this.props.match.params.id !== "new") {
       const inventory = await (
-        await fetch(`http://localhost:8080/api/inventories/${this.props.match.params.id}`)
+        await fetch(
+          `http://localhost:8080/api/inventory/${this.props.match.params.id}`
+        )
       ).json();
       this.setState({ item: inventory });
     }
@@ -43,7 +45,7 @@ class InventoryEdit extends Component {
     await fetch("http://localhost:8080/api/inventory", {
       method: item._id ? "PUT" : "POST",
       headers: {
-        "Accept": "application/json",
+        Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify(item),
